@@ -1,6 +1,6 @@
 class BookCommentsController < ApplicationController
   def create
-    book_comment = Book.find(params[:id])
+    book_comment = Book.find(params[:book_id])
     comment = current_user.book_comments.new(book_comment_params)
     comment.book_id = book.id
     comment.save
@@ -17,7 +17,7 @@ class BookCommentsController < ApplicationController
   
     private
 
-  def post_comment_params
+  def book_comment_params
     params.require(:book_comment).permit(:comment)
   end
 end
