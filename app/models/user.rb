@@ -29,6 +29,7 @@ class User < ApplicationRecord
   end
   # belongs_to :books
   attachment :profile_image, destroy: false
-  validates :introduction, length: {maximum: 50}, uniqueness: true
+  # validates :introduction, length: {maximum: 50}, uniqueness: true
+  validates :introduction, length: { maximum: 50 }
   validates :name, length: {maximum: 20, minimum: 2}, uniqueness: true
 end
