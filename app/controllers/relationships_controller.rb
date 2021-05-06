@@ -45,12 +45,12 @@ class RelationshipsController < ApplicationController
   
   def follow
     current_user.follow(@user)
-    redirect_to root_path
+    redirect_to users_path
   end
   
   def unfollow
     current_user.unfollow(@user.id)
-    redirect_to root_path
+    redirect_to users_path
   end
   
       private
