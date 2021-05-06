@@ -10,7 +10,7 @@
   </tr>
   <tr>
     <th>follows</th>
-    <th><p><%= "#{@user.follower.count}" %></p></th>
+    <th><p><%= link_to "#{@user.follower.count}", relationships_path(@user.id) %></p></th>
   </tr>
   <tr>
     <th>followers</th>

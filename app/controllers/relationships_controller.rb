@@ -31,6 +31,10 @@ class RelationshipsController < ApplicationController
   #   @users = @user.followers
   #   render 'users/index'
   # end
+  
+  def index
+    @user = User.find(params[:id])
+  end
 
   
   def follow
