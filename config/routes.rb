@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   root 'homes#top'
   get 'home/about' => 'homes#about'
   resources :users,only: [:show,:index,:edit,:update]
-  resources :relationships, only: [:create, :destroy]
+  post 'follow/:id' => 'relationships#follow', as: 'follow' # フォローする
+  post 'unfollow/:id' => 'relationships#unfollow', as: 'unfollow' # フォロー外す
   
   resources :books, only: [:create, :index, :show, :destroy, :edit, :update] do
     resource :favorites, only: [:create, :destroy]

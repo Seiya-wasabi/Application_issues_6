@@ -8,10 +8,11 @@ class User < ApplicationRecord
   has_many :book_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   # has_many :relationships, class_name: "follower", foreign_key: "○○_id", dependent: :destroy
-  has_many :relationships
-  has_many :followings, through: :relationships, source: :follow
-  has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: 'follow_id'
-  has_many :followers, through: :reverse_of_relationships, source: :user
+  has_many :follower, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy # フォロー取得
+  has_many :followed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy # フォロワー取得
+  has_many :following_user, through: :follower, source: :followed # 自分がフォローしている人
+  has_many :follower_user, through: :followed, source: :follower # 自分をフォローしている人
+  
   
   # def follow(other_user)
   #   unless self == other_user
@@ -27,19 +28,34 @@ class User < ApplicationRecord
   # def following?(other_user)
   #   self.followings.include?(other_user)
   # end
-  def follow(other_user)
-    unless self == other_user
-      follower.create(followed_id: other_user.id)
-    end
+  # ユーザーをフォローする
+  def follow(user)
+    follower.create(followed_id: user.id)
+  end
+  
+  # ユーザーのフォローを外す
+  def unfollow(user_id)
+    follower.find_by(followed_id: user_id).destroy
+  end
+  
+  # フォローしていればtrueを返す
+  def following?(user)
+    following_user.include?(user)
   end
 
-  def unfollow(other_user)
-    follower.find_by(followed_id: other_user.id).destroy
-  end
+  # def follow(other_user)
+  #   unless self == other_user
+  #     follower.create(followed_id: other_user.id)
+  #   end
+  # end
 
-  def following?(other_user)
-    followings.include?(other_user)
-  end
+  # def unfollow(other_user)
+  #   follower.find_by(followed_id: other_user.id).destroy
+  # end
+
+  # def following?(other_user)
+  #   followings.include?(other_user)
+  # end
   # belongs_to :books
   attachment :profile_image, destroy: false
   # validates :introduction, length: {maximum: 50}, uniqueness: true
