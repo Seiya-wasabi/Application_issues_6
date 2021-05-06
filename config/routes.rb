@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root 'homes#top'
   get 'home/about' => 'homes#about'
   get "relationship/:id" => "relationships#index", as: "relationships"
+  get "relationship/:id" => "relationships#followers", as: "followed"
   resources :users,only: [:show,:index,:edit,:update]
   post 'follow/:id' => 'relationships#follow', as: 'follow' # フォローする
   post 'unfollow/:id' => 'relationships#unfollow', as: 'unfollow' # フォロー外す
