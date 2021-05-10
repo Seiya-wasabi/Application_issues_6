@@ -30,20 +30,14 @@
       <table>
         <tr>
           <td>
-          <% @book.book_comments.each do |book_comment| %>
-            <p><%= attachment_image_tag(@user, :profile_image, :fill, 50, 50, fallback: "no-image-icon.jpg") %></p>
-            <%= book_comment.user.name %>
-            <%= book_comment.comment %>
-            <%= link_to "Destroy", book_book_comment_path(book_comment.book,book_comment), method: :delete  %>
-          <% end %>
+            <div id = "comment-area">
+              <%= render partial: 'book_comments/index', locals: {book: @book} %>
+              </div>
           </td>
         </tr>
       </table>
-      <div class="new-comment">
-        <%= form_with(model:[@book,@comment], local: true) do |f| %>
-          <%= f.text_area :comment, rows:'5' %>
-          <%= f.submit "送信" %>
-        <% end %>
+      <div id ="new-comment">
+        <%= render partial: 'book_comments/form', locals: { comment: @comment, book: @book} %>
       </div>
     </div>
   </div>
